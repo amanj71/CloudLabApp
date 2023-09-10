@@ -1,0 +1,17 @@
+SuperUser Data (Django Admin):
+user: amj132
+pass: Amj00amj00
+
+Mysql Database Info:
+DATABASES = {
+	'default': {
+		'ENGINE': 'django.db.backends.mysql',
+		'NAME': 'cloudlabapp',
+		'USER': 'root',
+		'PASSWORD': 'Amj00amj00',
+		'HOST':'localhost',
+		'PORT':'3306',
+	}
+}
+
+
