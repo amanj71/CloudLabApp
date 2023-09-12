@@ -1,7 +1,24 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p> Hi Every one </p>
-    
-
+<table class="table table-hover table-center">
+    <thead>
+      <tr>
+          <th>Project</th>
+          <th scope="col">Client</th>
+          <th scope="col">Location</th>
+          <th scope="col">Describtion</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      {% for pr in projects %}
+      <tr>
+          <td>{{pr.project}}</td>
+          <td>{{pr.client}}</td>
+          <td>{{pr.project_location_name}}</td>
+          <td>{{pr.project_describtion}}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+</table>
 {% endblock %}

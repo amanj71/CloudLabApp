@@ -10,18 +10,21 @@
     <title>LabApp</title>
 </head>
 <body>
-    <div class="container text-center bg-secondary">
+    <div class="">
         <div class="row" >
           <div class="col">
-            Column
+            <nav class="navbar bg-body-tertiary">
+              <div class="container-fluid">
+                <a class="navbar-brand" href="#">LabApp</a>
+              </div>
+            </nav>
           </div>
         </div>
-        <div class="row">
-            <div class="col">
-              Column
-            </div>
-          </div>
-      </div>
+        <div class="container">
+          {% block content %}
+          {% endblock %}
+        </div>
+    </div>
 
 
 </body>
