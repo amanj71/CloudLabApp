@@ -13,7 +13,9 @@
     <tbody class="table-group-divider">
       {% for pr in projects %}
       <tr>
-          <td>{{pr.project}}</td>
+          <td>
+            <a href=" {% url 'projects:projectdetail' pr.id %}">{{pr.project}}</a>
+          </td>
           <td>{{pr.client}}</td>
           <td>{{pr.project_location_name}}</td>
           <td>{{pr.project_describtion}}</td>

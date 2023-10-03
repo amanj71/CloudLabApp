@@ -1,7 +1,9 @@
 from django.urls import path, include
 from . import views
 
+app_name = 'projects'
+
 urlpatterns = [
-    path("", views.index, name="projects_index" ),
-    path("<int:project_id>", views.projectdetail, name="projects_projectdetail")
+    path("", views.index, name="index" ),
+    path("<int:project_id>", views.projectdetail, name="projectdetail")
 ]
