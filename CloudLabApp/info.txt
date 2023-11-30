@@ -1,6 +1,6 @@
 SuperUser Data (Django Admin):
 user: amj132
-pass: Amj00amj00
+pass: amjamjamj
 
 Mysql Database Info:
 DATABASES = {
