@@ -1,6 +1,24 @@
 {% extends 'base.html' %}
 {% block content %} 
-    <a>
-        Amanj knows the geometry of this project is ****{{projdetail.geometry_nodes}}****
-    </a>
+    <div class="container">
+        <a>
+            Amanj knows the geometry of {{projdetail.project}} project is ****{{projdetail.geometry_nodes}}****
+            <br>
+            Divisions added here:
+            {% for div in division %}
+            <br>
+            {{div.division}}
+            {% endfor %}
+        </a>
+    </div>
+    <div class="container-fluid">
+        <form method="post">
+            {% csrf_token %}
+            {{ sam_formset.management_form }}
+            {% for form in sam_formset %}
+                {{ form.as_table }}
+            {% endfor %}
+            <button type="submit">Save</button>
+        </form>   
+    </div>
 {% endblock  %}
