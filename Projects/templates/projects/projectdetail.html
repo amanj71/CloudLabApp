@@ -2,7 +2,7 @@
 {% block content %} 
     <div class="container">
         <a>
-            Amanj knows the geometry of {{projdetail.project}} project is ****{{projdetail.geometry_nodes}}****
+            Amanj knows the geometry of {{project.project}} project is ****{{project.geometry_nodes}}****
             <br>
             Divisions added here:
             {% for div in division %}
@@ -11,14 +11,11 @@
             {% endfor %}
         </a>
     </div>
+    <br>
     <div class="container-fluid">
-        <form method="post">
-            {% csrf_token %}
-            {{ sam_formset.management_form }}
-            {% for form in sam_formset %}
-                {{ form.as_table }}
-            {% endfor %}
-            <button type="submit">Save</button>
-        </form>   
+        <h6> Project Name:</h6> 
+        <p> {{ project.project }} </p>
+        <h6> Project Client:</h6> 
+        <p> {{ project.client }} </p>
     </div>
 {% endblock  %}

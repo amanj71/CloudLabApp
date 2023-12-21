@@ -1,0 +1,8 @@
+for project Serializer:
+{
+    "project": "a test for api",
+    "client": "Rest_framework",
+    "project_location_name": "API Adress",
+    "geometry_nodes": "00.0000"
+    "project_description": "Nothing"
+}
