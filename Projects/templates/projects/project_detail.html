@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %} 
+    <div class="container">
+        <p>
+            Amanj knows the geometry of --*- {{project.project}} --** project is ****{{project.geometry_nodes}}****
+        </p> 
+    </div>
+    <br>
+    <div class="container-fluid">
+        <h6> Project Name:</h6> 
+        <p> {{ project.project }} </p>
+        <h6> Project Client:</h6> 
+        <p> {{ project.client }} </p>
+    </div>
+    <br>
+    <div class="container-fluid p-3 mb-2 bg-secondary text-white">
+        <h6> Divisions Name:</h6> 
+        {% for div in division %}
+        <p> {{ div.division }} </p>
+        {% endfor %}
+    </div>
+{% endblock  %}

@@ -3,13 +3,14 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from rest_framework import status
 from .models import Project, Division, BoreHole, Sample
 from .serializers import SampleSerializer, BoreHoleSerializer, DivisionSerializer, ProjectSerializer
 from .forms import sample_formset
 
 ## Create your views here.
 
-def index(request):
+def projects(request):
     projects = Project.objects.all()
     return render(request, "projects\projects.html", {"projects": projects})
     #strprojects = ", ".join([p.project for p in projects])
@@ -17,10 +18,20 @@ def index(request):
 
 def projectdetail(request, proj_id):
     project = get_object_or_404(Project, id=proj_id)
-    context = {'project': project}
-    return render(request, 'projects\projectdetail.html', context)
-    
-def projectdetail_should_create_later():
+    division = Division.objects.filter(project_id=proj_id)
+    if division:
+        divi = division
+    else:
+        divi = ''
+    context = {'project': project, 'division': divi}
+    return render(request, 'projects\project_detail.html', context)
+
+#def divisiondetail(request, div_id):
+#    boreholes = BoreHole.objects.filter(division_id=div_id)
+#    context = {'boreholes': boreholes,}
+#    return render(request, 'projects\division_detail.html', context)
+
+def form_projectdetail_should_create_later():
     sam_formset = sample_formset(queryset=Sample.objects.all())
     if request.method == 'POST':
         sam_formset = sample_formset(request.POST)
@@ -46,11 +57,11 @@ def project_api(request):
         return Response(serializer.data)
     elif request.method == 'POST':
         serializer = ProjectSerializer(data=request.data)
-        if serializer.is_valid:
+        if serializer.is_valid():
             serializer.save()
             return Response('Project Added')
         else:
-            return Response()
+            return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
     
     
