@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block content %} 
+    <div class="container">
+        <p>
+            This Division has {{boreholes_count}} BHs.
+        </p> 
+    </div>
+    <br>
+    <div class="container-fluid">
+        <h6> Division Name:</h6> 
+        <p> {{ division.division }} </p>
+        <p> This Division is a Part of {{ project.project }} Project </p>
+    </div>
+    <br>
+    <div class="container-fluid p-3 mb-2 bg-secondary text-white">
+        <h6> Borehole Names:</h6> 
+        {% for bh in boreholes %}
+            {% if bh %}
+                <p> {{ bh.borehole }} </p>
+            {% else %}
+                <p> NO DIVISION </p>
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endblock %}

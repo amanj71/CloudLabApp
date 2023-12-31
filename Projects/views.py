@@ -21,15 +21,24 @@ def projectdetail(request, proj_id):
     division = Division.objects.filter(project_id=proj_id)
     if division:
         divi = division
+        print(type(divi))
     else:
-        divi = ''
+        divi = Division.objects.none()
+        print("****IS NOT ITERATIVE****")
+        print(type(divi))
+        print(divi)
     context = {'project': project, 'division': divi}
     return render(request, 'projects\project_detail.html', context)
 
-#def divisiondetail(request, div_id):
-#    boreholes = BoreHole.objects.filter(division_id=div_id)
-#    context = {'boreholes': boreholes,}
-#    return render(request, 'projects\division_detail.html', context)
+def divisiondetail(request, proj_id, div_id):
+    project = Project.objects.get(id=proj_id)
+    division = Division.objects.get(id=div_id)
+    boreholes = BoreHole.objects.filter(division_id=div_id)
+    boreholes_count = boreholes.count()
+    print(boreholes_count)
+    context = {'boreholes': boreholes, 'boreholes_count': boreholes_count, 'division': division,
+                'project': project}
+    return render(request, 'projects\division_detail.html', context)
 
 def form_projectdetail_should_create_later():
     sam_formset = sample_formset(queryset=Sample.objects.all())

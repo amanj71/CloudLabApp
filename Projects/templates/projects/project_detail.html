@@ -16,7 +16,11 @@
     <div class="container-fluid p-3 mb-2 bg-secondary text-white">
         <h6> Divisions Name:</h6> 
         {% for div in division %}
-        <p> {{ div.division }} </p>
+            {% if div %}
+                <p> {{ div.division }} </p>
+            {% else %}
+                <p> NO DIVISION </p>
+            {% endif %}
         {% endfor %}
     </div>
-{% endblock  %}
+{% endblock %}
