@@ -1,6 +1,7 @@
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponseRedirect
+from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
@@ -12,7 +13,7 @@ from .forms import sample_formset
 
 def projects(request):
     projects = Project.objects.all()
-    return render(request, "projects\projects.html", {"projects": projects})
+    return render(request, "projects/projects.html", {"projects": projects})
     #strprojects = ", ".join([p.project for p in projects])
     #return HttpResponse(strprojects)
 
@@ -28,17 +29,27 @@ def projectdetail(request, proj_id):
         print(type(divi))
         print(divi)
     context = {'project': project, 'division': divi}
-    return render(request, 'projects\project_detail.html', context)
+    return render(request, 'projects/project_detail.html', context)
 
 def divisiondetail(request, proj_id, div_id):
-    project = Project.objects.get(id=proj_id)
-    division = Division.objects.get(id=div_id)
+    project = get_object_or_404(Project, id=proj_id)
+    division = get_object_or_404(Division, id=div_id, project_id=proj_id)
     boreholes = BoreHole.objects.filter(division_id=div_id)
     boreholes_count = boreholes.count()
-    print(boreholes_count)
+
+    
     context = {'boreholes': boreholes, 'boreholes_count': boreholes_count, 'division': division,
                 'project': project}
-    return render(request, 'projects\division_detail.html', context)
+    
+    return render(request, 'projects/division_detail.html', context)
+
+def boreholedetail(request, proj_id, div_id, bh_id):
+    borehole = get_object_or_404(BoreHole, id=bh_id)
+    samples = get_object_or_404(Sample, borehole_id=bh_id)
+    context = {
+        'borehole': borehole, 'samples': samples,
+    }
+    return render(request, 'projects/borehole_detail.html', context)
 
 def form_projectdetail_should_create_later():
     sam_formset = sample_formset(queryset=Sample.objects.all())

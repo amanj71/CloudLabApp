@@ -2,26 +2,25 @@
 {% block content %} 
     <div class="container">
         <div class="container-md text-center">
-            <h2> Project Detail Page </h2>
+            <h2> BOREHOLE Page </h2>
         </div>
         <br>
         <p>
-            Amanj knows the geometry of --*- {{project.project}} --** project is ****{{project.geometry_nodes}}****
+            This Division has {{boreholes_count}} BHs.
         </p> 
     </div>
     <br>
     <div class="container-fluid">
-        <h6> Project Name:</h6> 
-        <p> {{ project.project }} </p>
-        <h6> Project Client:</h6> 
-        <p> {{ project.client }} </p>
+        <h6> Division Name:</h6> 
+        <p> {{ division.division }} </p>
+        <p> This Division is a Part of {{ project.project }} Project </p>
     </div>
     <br>
     <div class="container-fluid p-3 mb-2 bg-secondary text-white">
-        <h6> Divisions Name:</h6> 
-        {% for div in division %}
-            {% if div %}
-                <p> {{ div.division }} </p>
+        <h6> Borehole Names:</h6> 
+        {% for bh in boreholes %}
+            {% if bh %}
+                <p> {{ bh.borehole }} </p>
             {% else %}
                 <p> NO DIVISION </p>
             {% endif %}
