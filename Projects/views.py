@@ -44,8 +44,8 @@ def divisiondetail(request, proj_id, div_id):
     return render(request, 'projects/division_detail.html', context)
 
 def boreholedetail(request, proj_id, div_id, bh_id):
-    borehole = get_object_or_404(BoreHole, id=bh_id)
-    samples = get_object_or_404(Sample, borehole_id=bh_id)
+    borehole = get_object_or_404(BoreHole, id=bh_id, division_id=div_id) #it don't raise 404 if division doesn't be included of project id
+    samples = Sample.objects.filter(borehole_id=bh_id,)
     context = {
         'borehole': borehole, 'samples': samples,
     }
@@ -91,7 +91,7 @@ def project_api(request):
     #return Response(serializer.data)
 
 @api_view(['GET', 'PATCH', 'DELETE'])
-def project_detail_api(request, proj_id):
+def projectdetail_api(request, proj_id):
     project = get_object_or_404(Project, id=proj_id)
     if request.method == 'GET':
         serializer = ProjectSerializer(project)
@@ -109,3 +109,10 @@ def project_detail_api(request, proj_id):
     elif request.method == "DELETE":
         project.delete()
         return Response("The Poj has been deleted")
+
+@api_view(['GET'])
+def divisiondetail_api(request):
+    division = get_object_or_404(Division, id=div_id, project_id=proj_id)
+    serializer = DivisionSerializer(division)
+    return Response(serializer.data)
+    

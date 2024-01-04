@@ -8,6 +8,7 @@ urlpatterns = [
     path("<int:proj_id>/", views.projectdetail, name="projectdetail"),
     path("<int:proj_id>/<int:div_id>/", views.divisiondetail, name="divisiondetail"),
     path("<int:proj_id>/<int:div_id>/<int:bh_id>", views.boreholedetail, name="boreholedetail"),
-    path("api/", views.project_api, name="project_api"),
-    path("api/<int:proj_id>", views.project_detail_api, name="projectdetail_api"),
+    path("api/", views.projectapi, name="project_api"),
+    path("api/<int:proj_id>", views.projectdetail_api, name="projectdetail_api"),
+    path("api/<int:proj_id>/<int:div_id>/", views.divisiondetail_api, name="divisiondetail_api"),
 ]

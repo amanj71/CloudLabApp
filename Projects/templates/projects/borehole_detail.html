@@ -6,24 +6,44 @@
         </div>
         <br>
         <p>
-            This Division has {{boreholes_count}} BHs.
+            This BH is {{ borehole.depth }}m deep and recieved at {{ borehole.receive_date }}.
         </p> 
     </div>
     <br>
     <div class="container-fluid">
-        <h6> Division Name:</h6> 
-        <p> {{ division.division }} </p>
-        <p> This Division is a Part of {{ project.project }} Project </p>
+        <h6> BoreHole Name:</h6> 
+        <p> {{ borehole.borehole }} </p>
     </div>
     <br>
     <div class="container-fluid p-3 mb-2 bg-secondary text-white">
-        <h6> Borehole Names:</h6> 
-        {% for bh in boreholes %}
-            {% if bh %}
-                <p> {{ bh.borehole }} </p>
-            {% else %}
-                <p> NO DIVISION </p>
-            {% endif %}
-        {% endfor %}
+        <h6> Samples Table:</h6> 
+        <div class="">
+            <table class="table text-center table-hover w-75">
+                <thead>
+                    <tr>
+                        <th scope="col">Sample Number</th>
+                        <th scope="col">Depth from</th>
+                        <th scope="col">Depth to</th>
+                        <th scope="col">Sample Type</th>
+                        <th scope="col">Description</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for sample in samples %}
+                    <tr>
+                    {% if sample %}
+                        <td> {{ sample.sample_number}} </th>
+                        <td> {{ sample.depth_from}} </td>
+                        <td> {{ sample.depth_to}} </td>
+                        <td> {{ sample.sample_type}} </td>
+                        <td> {{ sample.sample_description}} </td>
+                        {% else %}
+                        <p> NO Saple Exists. </p>
+                        {% endif %}
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>      
     </div>
 {% endblock %}
