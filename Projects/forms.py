@@ -2,7 +2,7 @@ from django import forms
 from django.forms import formset_factory, modelformset_factory
 from .models import BoreHole, Sample, Division
 
-# write your ModelForms here
+## write your ModelForms here
 class DivisionForm(forms.ModelForm):
     class Meta:
         model = Division
@@ -18,7 +18,7 @@ class SampleForm(forms.ModelForm):
         model = Sample
         fields = ['sample_number', 'depth_from', 'depth_to', 'sample_type', 'sample_description']
 
-# write formsets here
+## write formsets here
 borehole_formset = formset_factory(BoreHoleForm, extra=1)
 #sample_formset = formset_factory(SampleForm, extra=1)
 
