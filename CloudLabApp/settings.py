@@ -40,6 +40,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'Projects.apps.ProjectsConfig',
+    'Home.apps.HomeConfig',
+    'WaterContent',
 ]
 
 MIDDLEWARE = [

@@ -1,31 +1,74 @@
 {% load static %}
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
-    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
-
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 initial-scale=1, shrink-to-fit=no">
     <title>LabApp</title>
-</head>
-<body>
-    <div class="">
-        <div class="row" >
-          <div class="col">
-            <nav class="navbar bg-body-tertiary">
-              <div class="container-fluid">
-                <a class="navbar-brand" href="#">LabApp</a>
-              </div>
-            </nav>
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+  </head>
+  <body>
+    <div class="container-fluid">
+      <nav class="navbar navbar-expand-sm navbar-light bg-light">
+        <div class="container py-0">
+          <a class="navbar-brand" href="{% url 'Home:home_page'%}">
+            <img src="{% static "logo.png" %}" alt="" width="43" height="24" class="d-inline-block align-text-top">
+            LabApp
+          </a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'Home:login_page'%}">Login</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Home:contact_page'%}">Contact</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="{% url 'Home:about_page'%}">About</a>
+              </li>
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Dropdown link
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                  <a class="dropdown-item" href="#">Action</a>
+                  <a class="dropdown-item" href="#">Another action</a>
+                  <a class="dropdown-item" href="#">Something else here</a>
+                </div>
+              </li>        
+            </ul>
           </div>
         </div>
-        <div class="container">
-          {% block content %}
-          {% endblock %}
-        </div>
+      </nav>
     </div>
+    
+    <div class="container">
+      {% block content %}{% endblock content %}
+    </div>
+    
+    
+    
+    
+    
+    
+    
+    
+    <h1>Testy Template </h1>
+    <h2>Testy Template </h2>
+    <h3>Testy Template </h3>
+    <h4>Testy Template </h4>
+    <h5>Testy Template </h5>
+    <h6>Testy Template </h6>
+    <p>Testy Template </p>
 
+    <script src="{% static 'bootstrap/js/jquery-3.7.1.min.js' %}"></script>
+    <script src="{% static 'bootstrap/js/popper.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.min.js' %}"></script>
+    
+    {% block javascript %}{% endblock javascript %}
 
-</body>
+  </body>
 </html>

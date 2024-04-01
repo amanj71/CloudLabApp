@@ -20,7 +20,9 @@
         <h6> Borehole Names:</h6> 
         {% for bh in boreholes %}
             {% if bh %}
-                <p> {{ bh.borehole }} </p>
+                <a href=" {% url 'projects:boreholedetail' bh.slug %}" class="text-white">
+                    {{ bh.borehole }} <br>
+                </a>
             {% else %}
                 <p> NO DIVISION </p>
             {% endif %}

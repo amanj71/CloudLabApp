@@ -17,9 +17,9 @@ def projects(request):
     #strprojects = ", ".join([p.project for p in projects])
     #return HttpResponse(strprojects)
 
-def projectdetail(request, proj_id):
-    project = get_object_or_404(Project, id=proj_id)
-    division = Division.objects.filter(project_id=proj_id)
+def projectdetail(request, slug):
+    project = get_object_or_404(Project, slug=slug)
+    division = Division.objects.filter(project_id=project.id)
     if division:
         divi = division
         print(type(divi))
@@ -31,10 +31,10 @@ def projectdetail(request, proj_id):
     context = {'project': project, 'division': divi}
     return render(request, 'projects/project_detail.html', context)
 
-def divisiondetail(request, proj_id, div_id):
-    project = get_object_or_404(Project, id=proj_id)
-    division = get_object_or_404(Division, id=div_id, project_id=proj_id)
-    boreholes = BoreHole.objects.filter(division_id=div_id)
+def divisiondetail(request, slug):
+    division = get_object_or_404(Division, slug=slug)
+    project = get_object_or_404(Project, id=division.project_id,) 
+    boreholes = BoreHole.objects.filter(division_id=division.id)
     boreholes_count = boreholes.count()
 
     
@@ -43,9 +43,9 @@ def divisiondetail(request, proj_id, div_id):
     
     return render(request, 'projects/division_detail.html', context)
 
-def boreholedetail(request, proj_id, div_id, bh_id):
-    borehole = get_object_or_404(BoreHole, id=bh_id, division_id=div_id) #it don't raise 404 if division doesn't be included of project id
-    samples = Sample.objects.filter(borehole_id=bh_id,)
+def boreholedetail(request, slug):
+    borehole = get_object_or_404(BoreHole, slug=slug)
+    samples = Sample.objects.filter(borehole_id=borehole.id)
     context = {
         'borehole': borehole, 'samples': samples,
     }

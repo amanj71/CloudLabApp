@@ -21,7 +21,9 @@
         <h6> Divisions Name:</h6> 
         {% for div in division %}
             {% if div %}
-                <p> {{ div.division }} </p>
+                <a href=" {% url 'projects:divisiondetail' div.slug %}" class="text-white">
+                    {{ div.division }} <br>
+                </a>
             {% else %}
                 <p> NO DIVISION </p>
             {% endif %}

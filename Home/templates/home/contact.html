@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% block content %}
+<h4 class="text-center"> Contact Page </h4>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-12">
+            <form method="post">
+                {% csrf_token %}
+                <div class="col-md-5">
+                    {{ contact_form }}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock content %}

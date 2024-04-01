@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container">
+    <form method="POST" id="bh-form-selector">
+        {% csrf_token %}
+        <div name="place-dropdown-buttons">
+            <div class="row py-2" id="ajaxify-container">
+                <div class="col">
+                    <h5 style="text-align: center;"> Select BH </h5>
+                    {% for field in form %}
+                        <label class="form-label">{{ field.label }}</label>
+                        {{ field }}
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="row py-2">
+                <div class="col">
+                    <div class="dropdown" id="ProjectDropDown">
+                        <a class="btn btn-light dropdown-toggle" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Project
+                        </a>
+                    
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink" id="project-selector">
+                            {% for project in form %}
+                                <a class="dropdown-item" href="#" data-project-id="{{ project.project.id }}"> {{ project.project }} </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dropdown">
+                        <a class="btn btn-light dropdown-toggle" role="button" id="division-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Division
+                        </a>
+                        
+                        <div class="dropdown-menu" id="division-dropdown-content">
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="dropdown">
+                        <a class="btn btn-light dropdown-toggle" role="button" id="borehole-selector" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Select Bore-Hole
+                        </a>
+                    
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                    
+                            <a class="dropdown-item" href="#"> # </a>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col">
+                    <input type="submit" value="Submit">
+                </div>
+            </div>
+        </div>
+
+        
+    </form>
+</div>
+
+<!-- <h3> AJaX Test Here </h3>
+<div class="container">
+    <h5> get list of projects here </h5>
+    <ul class="ajax-list" id="ajax-handler">
+    </ul>
+</div> -->
+<!-- <div class="container">
+    <h5> post an Object </h5>
+    <form method="POST" id="form-ajax"> {% csrf_token %}
+        <input type="text" id="name" name="name" placeholder="name"/><br>
+        <input type="email" id="email" name="email" placeholder="email"/><br>
+        <input type="text" id="text" name="text" placeholder="text"/><br>
+        <button type="submit"> submit </button>
+    </form>
+</div> -->
+
+<br> <br> <br> <br> <br> <br> <br> <br> <br>
+{% endblock content %}
+{% block javascript %}
+<script>
+
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    const csrftoken = getCookie('csrftoken');
+
+
+
+    let project_field = document.getElementById("id_project")
+    let division_field = document.getElementById("id_division")
+    project_field.addEventListener("change", getProjectId)
+
+    function getProjectId(e){
+        console.log(e.target.value)
+        id_project = e.target.value
+        const data = { id: id_project};
+        let url    = "{% url 'WaterContent:pass_divisions'%}";
+        // fetch api is here (from mozila developer)
+        async function postJSON(data) {
+        try {
+            const response = await fetch(url, {
+            method: "POST", // or 'PUT'
+            headers: {
+                "Content-Type": "application/json",
+                'X-CSRFToken': csrftoken,
+            },
+            body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("Success:", result);
+            division_field.innerHTML = '<option value="" selected="">--------</option>'
+            for (let i = 0; i < result.length; i++) {
+                division_field.innerHTML += `<option value="${result[i]["id"]}">${result[i]["division"]}</option>`;
+            }
+        } catch (error) {
+            console.error("Error:", error);
+        }
+        }
+        postJSON(data);
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    // $(document).on('submit','#form-ajax', function(e){
+    //     e.preventDefault();
+    //     $.ajax({
+    //         type: 'POST',
+    //         url : "{% url 'WaterContent:form_test_ajax'%}",
+    //         data: {
+    //             name:$('#name').val(),
+    //             email: $('#email').val(),
+    //             text: $('#text').val(),
+    //             csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+    //         },
+    //         success: function(response){
+                
+    //         },
+    //     });
+    // })
+
+
+
+
+    // $(document).ready(function(){
+    //     setInterval(function(){
+    //         $.ajax({
+    //             type: 'GET',
+    //             url: "{% url 'WaterContent:test_ajax'%}",
+    //             success: function(response){
+    //                 // console.log(response);
+    //                 $('#ajax-handler').empty();
+    //                 for (var key in response.ajax)
+    //                 {
+    //                     var temp = "<li>" + response.ajax[key].name + "</li>"
+    //                     $('#ajax-handler').append(temp)
+    //                 }
+    //             },
+    //             error: function(response){
+    //                 alert('An Error Occured')
+    //             },
+
+    //         });
+    //     }, 10000);
+    // })
+
+    
+
+</script>
+
+{% endblock javascript %}
