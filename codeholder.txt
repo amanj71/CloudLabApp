@@ -1,4 +1,40 @@
 
+// Add event listener for the divisions dropdown
+division_field.addEventListener("change", getDivisionId);
+
+function getDivisionId(e) {
+    console.log(e.target.value);
+    const id_division = e.target.value;
+    const data = { id: id_division };
+    const url = "{% url 'WaterContent:pass_boreholes' %}";  // Replace with your actual URL
+
+    // Fetch boreholes related to the selected division
+    async function fetchBoreholes(data) {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken,
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("Boreholes:", result);
+
+            // Update the borehole dropdown options
+            borehole_field.innerHTML = '<option value="" selected="">--------</option>';
+            for (let i = 0; i < result.length; i++) {
+                borehole_field.innerHTML += `<option value="${result[i]["id"]}">${result[i]["borehole"]}</option>`;
+            }
+        } catch (error) {
+            console.error("Error fetching boreholes:", error);
+        }
+    }
+
+    fetchBoreholes(data);
+}
+
 
 
 

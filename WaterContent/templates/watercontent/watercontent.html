@@ -11,6 +11,7 @@
                         <label class="form-label">{{ field.label }}</label>
                         {{ field }}
                     {% endfor %}
+                    <input type="submit" value="Submit">
                 </div>
             </div>
             <div class="row py-2">
@@ -101,8 +102,9 @@
 
 
 
-    let project_field = document.getElementById("id_project")
-    let division_field = document.getElementById("id_division")
+    let project_field = document.getElementById("id_project");
+    let division_field = document.getElementById("id_division");
+    let borehole_field = document.getElementById("id_borehole");
     project_field.addEventListener("change", getProjectId)
 
     function getProjectId(e){
@@ -112,28 +114,68 @@
         let url    = "{% url 'WaterContent:pass_divisions'%}";
         // fetch api is here (from mozila developer)
         async function postJSON(data) {
-        try {
-            const response = await fetch(url, {
-            method: "POST", // or 'PUT'
-            headers: {
-                "Content-Type": "application/json",
-                'X-CSRFToken': csrftoken,
-            },
-            body: JSON.stringify(data),
-            });
-            const result = await response.json();
-            console.log("Success:", result);
-            division_field.innerHTML = '<option value="" selected="">--------</option>'
-            for (let i = 0; i < result.length; i++) {
-                division_field.innerHTML += `<option value="${result[i]["id"]}">${result[i]["division"]}</option>`;
+            try {
+                const response = await fetch(url, {
+                    method: "POST", // or 'PUT'
+                    headers: {
+                        "Content-Type": "application/json",
+                        'X-CSRFToken': csrftoken,
+                    },
+                    body: JSON.stringify(data),
+                });
+                const result = await response.json();
+                console.log("Success:", result);
+                division_field.innerHTML = '<option value="" selected="">--------</option>'
+                for (let i = 0; i < result.length; i++) {
+                    division_field.innerHTML += `<option value="${result[i]["id"]}">${result[i]["division"]}</option>`;
+                }
+            } catch (error) {
+                console.error("Error:", error);
             }
-        } catch (error) {
-            console.error("Error:", error);
         }
-        }
-        postJSON(data);
+            // fetchDivisions(data);
+            postJSON(data);   //this line has been disabled for now
     }
 
+    // Add event listener for the divisions dropdown
+    division_field.addEventListener("change", getDivisionId);
+
+    function getDivisionId(e) {
+    console.log(e.target.value);
+    const id_division = e.target.value;
+    const data = { id: id_division };
+    const url = "{% url 'WaterContent:pass_boreholes' %}";  // Replace with your actual URL
+
+    // Fetch boreholes related to the selected division
+    async function fetchBoreholes(data) {
+        try {
+            const response = await fetch(url, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": csrftoken,
+                },
+                body: JSON.stringify(data),
+            });
+            const result = await response.json();
+            console.log("Boreholes:", result);
+
+            // Update the borehole dropdown options
+            borehole_field.innerHTML = '<option value="" selected="">--------</option>';
+            for (let i = 0; i < result.length; i++) {
+                borehole_field.innerHTML += `<option value="${result[i]["id"]}">${result[i]["borehole"]}</option>`;
+            }
+        } catch (error) {
+            console.error("Error fetching boreholes:", error);
+        }
+    }
+
+    fetchBoreholes(data);
+    }
+
+
+
+    
 
 
 

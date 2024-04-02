@@ -13,7 +13,8 @@ def select_related_objects(request):
     if request.method == "POST":
         form = WaterContentForm(request.POST)
         if form.is_valid():
-            form.save()
+            print("Got Form Printed here (From Views.py)********")
+            print(form)
     context = {
         "form": form
     }
@@ -26,6 +27,13 @@ def pass_divisions(request):
     project_id = data['id']
     divisions = Division.objects.filter(project_id=project_id)
     return JsonResponse(list(divisions.values("id", "division")), safe=False)
+
+
+def pass_boreholes(request):
+    data = json.loads(request.body)
+    division_id = data['id']
+    boreholes = BoreHole.objects.filter(division_id=division_id)
+    return JsonResponse(list(boreholes.values("id", "borehole")), safe=False)
 
 
 
