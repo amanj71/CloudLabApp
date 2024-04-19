@@ -7,7 +7,7 @@ class WaterContent(models.Model):
     division = models.ForeignKey(Division, on_delete=models.SET_NULL, blank=True, null=True)
     borehole = models.ForeignKey(BoreHole, on_delete=models.CASCADE, blank=True, null=True)
     sample = models.ForeignKey(Sample, on_delete=models.CASCADE)
-    date = models.DateField(auto_now=True, editable=True)
+    date = models.DateTimeField(auto_now_add=True, editable=True)
     weight_tin = models.DecimalField(max_digits=10, decimal_places=2)
     wet_weight_tin_soil = models.DecimalField(max_digits=10, decimal_places=2)
     dry_weight_tin_soil = models.DecimalField(max_digits=10, decimal_places=2)
