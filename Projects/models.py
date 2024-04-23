@@ -34,7 +34,7 @@ class Project(models.Model):
 class Division(models.Model):
     division = models.CharField(max_length=255, null=True, blank=True)
     slug = models.SlugField(default='-')
-    project = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name='project_related', null=True)
+    project = models.ForeignKey(Project, on_delete=models.SET_NULL, related_name='project_related', null=True, blank=True)
     
     class Meta:
         ordering = ["division"]
@@ -43,30 +43,44 @@ class Division(models.Model):
         return self.division
     
     def save(self, *args, **kwargs):
-        if self.slug:  # edit
-            if slugify(f"{self.project.project}-{self.division}") != self.slug:
+        if self.project == None:
+            if self.slug:  # edit
+                if slugify(f"'default'-{self.division}") != self.slug:
+                    self.slug = generate_unique_slug(Division, 'default', self.division)
+                else:  # create
+                    self.slug = generate_unique_slug(Division, 'default', self.division)
+        else:
+            if self.slug:  # edit
+                if slugify(f"{self.project.project}-{self.division}") != self.slug:
+                    self.slug = generate_unique_slug(Division, self.project.project, self.division)
+            else:  # create
                 self.slug = generate_unique_slug(Division, self.project.project, self.division)
-        else:  # create
-            self.slug = generate_unique_slug(Division, self.project.project, self.division)
         super(Division, self).save(*args, **kwargs)
     
-
 class BoreHole(models.Model):
     borehole = models.CharField(max_length=255, null=True, blank=True)
     depth = models.FloatField(null=True)
     receive_date = models.DateField(null=True)
-    division = models.ForeignKey(Division, on_delete=models.PROTECT, related_name='division_related', null=True, blank=True)
+    division = models.ForeignKey(Division, on_delete=models.SET_NULL, related_name='division_related', null=True, blank=True)
     slug = models.SlugField(default='-')
 
     def __str__(self):
         return self.borehole
     
     def save(self, *args, **kwargs):
-        if self.slug:  # edit
-            if slugify(f"{self.division.division}-{self.borehole}-{self.depth}") != self.slug:
-                self.slug = generate_unique_slug(BoreHole, self.division.division, self.borehole, str(self.depth))
-        else:  # create
-            self.slug = generate_unique_slug(BoreHole, self.division.division, self.borehole, str(self.depth))    
+        if self.division == None:
+            if self.slug:  # edit
+                if slugify(f"'default'-{self.borehole}-{self.depth}") != self.slug:
+                    self.slug = generate_unique_slug(BoreHole, 'default', self.borehole, str(self.depth))
+            else:  # create
+                self.slug = generate_unique_slug(BoreHole, 'default', self.borehole, str(self.depth))
+            
+        else:
+            if self.slug:  # edit
+                if slugify(f"{self.division.division}-{self.borehole}-{self.depth}") != self.slug:
+                    self.slug = generate_unique_slug(BoreHole, self.division.division, self.borehole, str(self.depth))
+            else:  # create
+                self.slug = generate_unique_slug(BoreHole, self.division.division, self.borehole, str(self.depth))    
         super(BoreHole, self).save(*args, **kwargs)
     
 class Sample(models.Model):
