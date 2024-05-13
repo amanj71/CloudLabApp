@@ -87,8 +87,8 @@ class Sample(models.Model):
     sample_number = models.PositiveSmallIntegerField(null=True, blank=True)
     depth_from = models.FloatField()
     depth_to = models.FloatField()
-    sample_types_choices = [('Bag', 'Bag'), ('SPT', 'SPT'), ('Shelby', "Shelby")]
-    sample_type = models.CharField(max_length=8, choices=sample_types_choices, default='Bag')
+    SAMPLE_TYPES_CHOICES = [('Bag', 'Bag'), ('SPT', 'SPT'), ('Shelby', "Shelby")]
+    sample_type = models.CharField(max_length=8, choices=SAMPLE_TYPES_CHOICES, default='Bag')
     sample_description = models.TextField(blank=True)
     random_string = models.CharField(max_length=10, blank=True, editable=False, default=generate_random_string(10))
     borehole = models.ForeignKey(BoreHole, on_delete=models.PROTECT, related_name='borehole_related', null=True, blank=True)

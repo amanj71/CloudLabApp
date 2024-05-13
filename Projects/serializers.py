@@ -15,11 +15,11 @@ class BoreHoleSerializer(serializers.ModelSerializer):
 class DivisionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Division
-        fields = ['division']
+        fields = ['id', 'division']
 
 class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
-        fields = ['project', 'client', 'project_location_name', 'geometry_nodes', 'project_description']
+        fields = ['id', 'project', 'client', 'project_location_name', 'geometry_nodes', 'project_description']
 
 

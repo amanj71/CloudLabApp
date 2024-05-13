@@ -5,9 +5,11 @@ from django.core.exceptions import ObjectDoesNotExist
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status
+from rest_framework.viewsets import ModelViewSet
 from .models import Project, Division, BoreHole, Sample
 from .serializers import SampleSerializer, BoreHoleSerializer, DivisionSerializer, ProjectSerializer
 from .forms import sample_formset
+
 
 ## Create your views here.
 
@@ -67,8 +69,8 @@ def form_projectdetail_should_create_later():
     context = {"projdetail": projdetail, 'division': division,'sam_formset': sam_formset}
     return render(request, "projects\projectdetail.html", context)
 
-## create your view_api here
-
+## Create Your API Views Here
+# functional views api
 @api_view(['GET', 'POST'])
 def project_api(request):
     queryset = Project.objects.all()
@@ -115,4 +117,12 @@ def divisiondetail_api(request):
     division = get_object_or_404(Division, id=div_id, project_id=proj_id)
     serializer = DivisionSerializer(division)
     return Response(serializer.data)
-    
+
+
+# class based views api
+class ProjectViewSetAPI(ModelViewSet):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+
