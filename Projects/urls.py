@@ -8,6 +8,9 @@ app_name = 'projects'
 # Asserting Routers
 router = routers.SimpleRouter()
 router.register('api/projects', views.ProjectViewSetAPI)
+router.register('api/divisions', views.DivisionViewSetAPI)
+router.register('api/boreholes', views.BoreHoleViewSetAPI)
+router.register('api/samples', views.SampleViewSetAPI)
 
 
 

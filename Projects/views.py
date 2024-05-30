@@ -124,5 +124,14 @@ class ProjectViewSetAPI(ModelViewSet):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
+class DivisionViewSetAPI(ModelViewSet):
+    queryset = Division.objects.all()
+    serializer_class = DivisionSerializer
 
+class BoreHoleViewSetAPI(ModelViewSet):
+    queryset = BoreHole.objects.all()
+    serializer_class = BoreHoleSerializer
 
+class SampleViewSetAPI(ModelViewSet):
+    queryset = Sample.objects.all()
+    serializer_class = SampleSerializer

@@ -5,12 +5,12 @@ from .models import Project, Division, BoreHole, Sample
 class SampleSerializer(serializers.ModelSerializer):
     class Meta:
         model = Sample
-        fields = ['sample_number', 'depth_from', 'depth_to', 'sample_type', 'sample_description']
+        fields = ['sample_number', 'depth_from', 'depth_to', 'sample_type', 'borehole', 'sample_description']
 
 class BoreHoleSerializer(serializers.ModelSerializer):
     class Meta:
         model = BoreHole
-        fields = ['borehole', 'depth', 'recieve_date']
+        fields = ['borehole', 'depth', 'receive_date']
 
 class DivisionSerializer(serializers.ModelSerializer):
     class Meta:
