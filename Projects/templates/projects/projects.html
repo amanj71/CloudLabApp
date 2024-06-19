@@ -14,7 +14,7 @@
       {% for pr in projects %}
       <tr>
           <td>
-            <a href=" {% url 'projects:projectdetail' pr.slug %}">{{pr.project}}</a>
+            <a href=" {% url 'Projects:projectdetail' pr.slug %}">{{pr.project}}</a>
           </td>
           <td>{{pr.client}}</td>
           <td>{{pr.project_location_name}}</td>

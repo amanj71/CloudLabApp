@@ -3,7 +3,7 @@ from django.views.generic import TemplateView
 from rest_framework import routers
 from . import views
 
-app_name = 'projects'
+app_name = 'Projects'
 
 # Asserting Routers
 router = routers.SimpleRouter()
